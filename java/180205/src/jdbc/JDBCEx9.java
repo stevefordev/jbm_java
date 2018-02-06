@@ -28,8 +28,8 @@ public class JDBCEx9 {
     // 구문객체
     Statement stmt = StatementUtil.getStatement();
     
-    //SQL  
-    String sql = "SELECT no, name FROM idols WHERE name LIKE '%" + name +"%'"
+    // SQL 구문 작성
+    String sql = "SELECT no, name, height, weight FROM idols WHERE name LIKE '%" + name +"%'"
         + "ORDER BY 1";
     
     ResultSet rs = stmt.executeQuery(sql);
