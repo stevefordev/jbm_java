@@ -24,11 +24,14 @@ public class JDBCEx9 {
     Scanner scan = new Scanner(System.in);
 
     String name = scan.nextLine();
-
+    
+    // 구문객체
+    Statement stmt = StatementUtil.getStatement();
+    
+    //SQL  
     String sql = "SELECT no, name FROM idols WHERE name LIKE '%" + name +"%'"
         + "ORDER BY 1";
     
-    Statement stmt = StatementUtil.getStatement();
     ResultSet rs = stmt.executeQuery(sql);
     
     while (rs.next()) {
