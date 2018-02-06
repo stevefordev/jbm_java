@@ -23,13 +23,13 @@ public class JDBCEx9 {
     System.out.println("이름을 입력하세요.");
     Scanner scan = new Scanner(System.in);
 
-    String name = scan.nextLine();
+    String q = scan.nextLine();
     
     // 구문객체
     Statement stmt = StatementUtil.getStatement();
     
     // SQL 구문 작성
-    String sql = "SELECT no, name, height, weight FROM idols WHERE name LIKE '%" + name +"%'"
+    String sql = "SELECT no, name, height, weight FROM idols WHERE name LIKE '%" + q +"%'"
         + "ORDER BY 1";
     
     ResultSet rs = stmt.executeQuery(sql);
@@ -39,10 +39,12 @@ public class JDBCEx9 {
       int no = rs.getInt(1);
 
       // String name = rs.getString("name");
-      String first = rs.getString(2);
+      String name = rs.getString(2);
+      
+      int height = rs.getInt(3);
+      int weight = rs.getInt(4);
 
-
-      String result = String.format("번호:%s, 성명:%s", no, first);
+      String result = String.format("번호:%s, 성명:%s", no, name);
       System.out.println(result);
     } // while() end
   }
