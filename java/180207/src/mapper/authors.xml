@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="authors">
+	<!-- 각 mapper파일을 구별해야 되기 대문에 namespace가 필요함(테이블명) -->
+
+	<!-- SQL구문을 작성하는곳 -->
+	<select id="selectOne" resultType="vo.Author" parameterType="int">
+		SELECT no, name, nationality,
+		birth_date birthDate
+		FROM authors
+		WHERE no = #{no}
+	</select>
+	<insert id="insert" parameterType="vo.Author">
+		INSERT INTO authors(no, name,
+		nationality, birth_date)
+		VALUES (authors_seq.nextval,
+		#{name},#{nationality}, #{birthDate})
+	</insert>
+
+	<!--parameterType="java.lang.String" -->
+	<delete id="delete" parameterType="string">
+		DELETE authors
+		WHERE name =
+		#{name}
+	</delete>
+
+	<update id="update" parameterType="vo.Author">
+		UPDATE authors SET birth_date
+		= #{birthDate}
+		WHERE no = #{no}
+	</update>
+
+</mapper>
