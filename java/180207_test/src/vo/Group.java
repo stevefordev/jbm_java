@@ -1,12 +1,16 @@
 package vo;
 
 import java.sql.Date;
-
+import java.util.ArrayList;
+import java.util.List;
+ 
 public class Group {
 
 	private int no;
 	private String name;
 	private Date debutDate;
+
+	private ArrayList<Idol> idolList;
 
 	public Group() {
 
@@ -41,8 +45,17 @@ public class Group {
 	public void setDebutDate(Date debutDate) {
 		this.debutDate = debutDate;
 	}
+ 
+	public ArrayList<Idol> getIdolList() {
+		return idolList;
+	}
+
+	public void setIdolList(ArrayList<Idol> idolList) {
+		this.idolList = idolList;
+	}
 
 	public String toString() {
 		return "no:" + this.getNo() + " / name:" + this.getName();
 	}
+ 
 }
