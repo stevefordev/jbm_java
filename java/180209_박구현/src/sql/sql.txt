@@ -1,0 +1,42 @@
+ --- 3번문제
+
+SELECT no 번호, name 장르
+FROM genres;
+
+--- 4번문제
+
+SELECT m.no 번호, m.name 영화명, TO_CHAR(m.release_date,'YYYY"년 "MM"월 "DD"일"') 개봉일, m.director 감독, TO_CHAR(m.audience_num,'999,999,999')||'명' 관색수, g.name 장르
+FROM movies m, genres g
+WHERE m.genre = g.no
+AND m.end_date IS NULL
+ORDER BY 5 DESC;
+
+--- 5번문제
+
+SELECT g.name 장르명, TO_CHAR(ROUND(AVG(m.audience_num)), '999,999,999')||'명' 평균관객수, COUNT(g.no)||'개' 영화갯수
+FROM genres g, movies m
+WHERE m.genre = g.no
+GROUP BY g.no, g.name
+HAVING count(g.no) >= 2
+ORDER BY 2 DESC;
+
+
+--- 6번문제
+/* 조건에서 '오늘을 기준으로' 의 의미에 따라서 end_date 가 없는 경우(개봉중인)를
+* 1. 시험시간을 기준으로만 보면 : TO_DATE('2018-02-09 14:00', 'YYYY-MM-DD HH24:MI')
+* 2. 날짜가 지나더라도  개봉일수와 하루평균 관객수가 의미 있는 데이터 이려면 : sysdate
+* 를 사용 가능하다고 생각되어서 sysdate를 선택 하였습니다. 다만, sysdate 를 사용하는 경우 채점 하실 당시의 실행 결과 값과
+* 문제지의 결과값과는 다소 차이가 있습니다.
+*/
+SELECT name 영화명,  
+     ROUND((DECODE(end_date, null, sysdate, end_date) - release_date))||'일' 개봉일수, 
+     TO_CHAR(ROUND(audience_num / ROUND((DECODE(end_date, null, sysdate, end_date) - release_date))),'999,999,999')||'명' "하루평균 관객수"
+FROM movies
+ORDER BY 3 DESC;
+
+-- 수정
+SELECT name 영화명,  
+     CEIL((NVL(end_date, sysdate) - release_date))||'일' 개봉일수, 
+     TO_CHAR(ROUND(audience_num / CEIL((NVL(end_date, sysdate) - release_date))),'999,999,999')||'명' "하루평균 관객수"
+FROM movies
+ORDER BY 3 DESC;

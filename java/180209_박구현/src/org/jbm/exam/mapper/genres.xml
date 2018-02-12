@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="genres">
+
+	<insert id="insert" parameterType="string">
+		INSERT INTO genres(no, name)
+		VALUES(genres_seq.nextval, #{name})
+	</insert>
+
+	<update id="update" parameterType="Genre">
+		UPDATE genres SET name =
+		#{name}
+		WHERE no = #{no}
+	</update>
+
+	<select id="selectList" resultType="Genre">
+		SELECT no, name
+		FROM genres
+		ORDER BY 2
+	</select>
+
+	<delete id="delete" parameterType="string">
+		DELETE genres
+		WHERE name = #{name}
+	</delete>
+
+
+</mapper>
