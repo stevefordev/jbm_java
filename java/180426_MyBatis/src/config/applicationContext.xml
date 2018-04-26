@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- bean wiring(빈묶기) -->
+
+	<!-- ConnectionPool(DataSource) 설정 -->
+	<bean id="dataSource" p:username="test" p:password="1111"
+		p:driverClassName="oracle.jdbc.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:xe"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource" />
+
+	<!-- SqlSessionFactory 설정 -->
+	<bean id="sqlSessionFactory" p:dataSource-ref="dataSource"
+		p:configLocation="config/mybatis-config.xml"
+		class="org.mybatis.spring.SqlSessionFactoryBean" />
+
+	<!-- SqlSession 설정 -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+	<!-- DAO 설정 -->
+	<bean id="authorsDAO" p:session-ref="sqlSession"
+		class="dao.AuthorsDAOImpl" />
+	<bean id="booksDAO" p:session-ref="sqlSession"
+		class="dao.BooksDAOImpl" />
+
+	<!-- Service 설정 -->
+	<bean id="authorsService" p:dao-ref="authorsDAO"
+		class="service.AuthorsServiceImpl" />
+	<bean id="booksService" p:dao-ref="booksDAO"
+		class="service.BooksServiceImpl" />
+</beans>
